@@ -49,18 +49,7 @@ def main():
     lbl_ket_qua.width = 42
     lbl_ket_qua.height = 11
 
-# =============================================================================
-# # Đặt nội dung và kiểu chữ của Text Element
-#     lbl_ket_qua.markdown("Nội dung của nhãn")
-#     lbl_ket_qua.markdown(f"<span style='font-family: Consolas; font-size: 14px;'>Nội dung của nhãn với kiểu chữ Consolas và kích thước 14px</span>", unsafe_allow_html=True)
-# =============================================================================
-    
-    
-    # btn_tao_anh = st.button('Tao anh', width=9)
-    # btn_nhan_dang = st.button('Nhan dang', width=9)
 
-    # btn_tao_anh = st.button('Tạo ảnh', key='btn_tao_anh', help='Tooltip cho nút Tạo ảnh')
-    # btn_nhan_dang = st.button('Nhận dạng', key='btn_nhan_dang', help='Tooltip cho nút Nhận dạng')
     
 # Sử dụng CSS để điều chỉnh chiều rộng của nút
     st.write('<style>div.row-widget.stButton > div{width: 50%;}</style>', unsafe_allow_html=True)
@@ -86,46 +75,6 @@ def main():
         return mang
 
 
-# =============================================================================
-#     def btn_tao_anh():
-#         index = np.random.randint(0, 9999, 150)
-#         digit_random = np.zeros((10*28, 15*28), dtype=np.uint8)
-#         # if len(index) > 0:
-#         for i in range(0, 150):
-#                 # if index[i] < len(X_test_image):
-#                 m = i // 15
-#                 n = i % 15
-#                 digit_random[m*28:(m+1)*28, n*28:(n+1)*28] = X_test_image[index[i]]
-#         cv2.imwrite('D:/HocMay/Streamlit_multi_pages/pages/digit_random.jpg', digit_random)
-#         image = Image.open('D:/HocMay/Streamlit_multi_pages/pages/digit_random.jpg')
-#         st.image(image, width=600)
-#     
-#         # lbl_ket_qua.text('')
-#         print(index)
-#         
-#         
-#     # print(index)
-#     def btn_nhan_dang():
-#         print(index)
-#         
-#         # mystring = "".join(index)
-#         # st.write('huhuhuh'+mystring+'hahahahah')
-#         X_test_sample = np.zeros((150, 784), dtype=np.float32)
-#         if len(index) > 0:
-#             for i in range(0, 150):
-#                 if index[i] < len(X_test):
-#                     X_test_sample[i] = X_test[index[i]]
-#         prediction = model.predict(X_test_sample)
-#         s = ''
-#         for i in range(min(len(index), len(prediction))):
-#             if index[i] < len(prediction):
-#                 ket_qua = np.argmax(prediction[i])
-#                 s = s + str(ket_qua) + ' '
-#                 if (i+1) % 15 == 0:
-#                     s = s + '\n'
-#         mystring = "".join(index)
-#         st.write('huhuhuh'+mystring+'hahahahah')
-# =============================================================================\
     m = st.markdown("""
 <style>
 div.stButton > button:first-child {
