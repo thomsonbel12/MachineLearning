@@ -1,4 +1,5 @@
 import streamlit as st
+import pickle
 import pandas as pd
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
@@ -8,25 +9,36 @@ from sklearn.naive_bayes import MultinomialNB
 st.set_page_config(page_title="Language Detection", page_icon="🌐")
 st.subheader('🌐 Language Detection')
 
-data = pd.read_csv('./pages/language_dataset_2.csv', encoding= 'unicode_escape')
-print(data.head())
+model_path = 'pages\model\language_model.pkl'
+vectorizer_path = 'pages\model\language_vectorizer.pkl'
+with open(model_path, 'rb') as file:
+    model = pickle.load(file)
+with open(vectorizer_path, 'rb') as file:
+    vectorizer = pickle.load(file)
+# Function to detect the language of a text
+def detect_language(transformed_text):
+    # Preprocess the input text if needed
+    # preprocessed_text = transformed_text.lower()  # Example: converting to lowercase
+    # vectorizer = CountVectorizer()
+    # # Tokenize and transform the preprocessed text using the same vectorizer used during training
+    # transformed_text = vectorizer.transform([preprocessed_text]).toarray()
+    
+    # Predict the language using the trained model
+    predicted_language = model.predict(transformed_text)[0]
+    
+    return predicted_language
 
-x = np.array(data["Text"])
-y = np.array(data["Language"])
-
-cv = CountVectorizer()
-X = cv.fit_transform(x)
-X_train, X_test, y_train, y_test = train_test_split(X, y, 
-                                                    test_size=0.33, 
-                                                    random_state=42)
-model = MultinomialNB()
-model.fit(X_train,y_train)
-model.score(X_test,y_test)
 
 user = st.text_input("Enter something: ")
-data = cv.transform([user]).toarray()
+
+
 button = st.button('Detect')
 if button:
-    output = model.predict(data)
+    # cv = CountVectorizer()
+    # vectorizer = CountVectorizer()
+    # Tokenize and transform the preprocessed text using the same vectorizer used during training
+    transformed_text = vectorizer.transform([user]).toarray()
+    output = detect_language(transformed_text)
     st.markdown(f"This language is: {output}")
     print(output)
+

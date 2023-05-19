@@ -29,8 +29,9 @@ if 'frame_stop' not in st.session_state:
 if st.session_state.stop == True:
     FRAME_WINDOW.image(st.session_state.frame_stop, channels='BGR')
 
-
+#Tạo một biến svc bằng cách tải mô hình đã được huấn luyện trước từ tệp svc.pkl sử dụng joblib.load.
 svc = joblib.load('./pages/svc.pkl')
+# Định nghĩa một danh sách mydict chứa tên của các người trong mô hình nhận dạng đã được train.
 mydict = ['BanKiet', 'BanNghia',  'BanThanh','HoanHao', 'HoangLam', 'HuyTruong', 'SangSang', 'ThayDuc']
 
 def visualize(input, faces, fps, thickness=2):
@@ -49,6 +50,7 @@ def visualize(input, faces, fps, thickness=2):
 
 
 if __name__ == '__main__':
+    # Đọc mô hình nhận diện khuôn mặt từ tệp face_detection_yunet_2022mar.onnx
     detector = cv.FaceDetectorYN.create(
         './pages/face_detection_yunet_2022mar.onnx',
         "",
@@ -56,10 +58,11 @@ if __name__ == '__main__':
         0.9,
         0.3,
         5000)
-    
+    #Đọc mô hình nhận dạng khuôn mặt từ tệp face_recognition_sface_2021dec.onnx và tạo một đối tượng recognizer
     recognizer = cv.FaceRecognizerSF.create(
     './pages/face_recognition_sface_2021dec.onnx',"")
 
+    
     tm = cv.TickMeter()
 
     frameWidth = int(cap.get(cv.CAP_PROP_FRAME_WIDTH))
@@ -75,19 +78,24 @@ if __name__ == '__main__':
 
         # Inference
         tm.start()
+        # Sử dụng detector.detect để nhận diện các khuôn mặt trong khung hình. Kết quả trả về là một tuple faces.
         faces = detector.detect(frame) # faces is a tuple
         tm.stop()
         
+        # Nếu có ít nhất một khuôn mặt được nhận diện (faces[1] is not None), thực hiện các bước nhận dạng khuôn mặt.
         if faces[1] is not None:
             face_align = recognizer.alignCrop(frame, faces[1][0])
             face_feature = recognizer.feature(face_align)
             test_predict = svc.predict(face_feature)
             result = mydict[test_predict[0]]
+            # Vẽ tên của người được dự đoán lên khung hình bằng cv.putText.
             cv.putText(frame,result,(1,50),cv.FONT_HERSHEY_SIMPLEX, 0.5, (0, 255, 0), 2)
 
         # Draw results on the input image
+        # Gọi hàm visualize để vẽ các khuôn mặt đã được nhận diện lên khung hình.
         visualize(frame, faces, tm.getFPS())
 
         # Visualize results
+        # Hiển thị khung hình đầu vào với các khuôn mặt đã được nhận diện bằng FRAME_WINDOW.image.
         FRAME_WINDOW.image(frame, channels='BGR')
     cv.destroyAllWindows()

@@ -9,6 +9,7 @@ from tensorflow.keras.optimizers import SGD
 import cv2
 import pandas as pd
 # Load model architecture and weights
+# Định nghĩa đường dẫn của tệp mô hình và trọng số của mô hình.
 model_architecture = "./pages/digit_config.json"
 model_weights = "./pages/digit_weight.h5"
 model = model_from_json(open(model_architecture).read())
@@ -16,6 +17,7 @@ model.load_weights(model_weights)
 optim = SGD()
 model.compile(loss="categorical_crossentropy", optimizer=optim, metrics=["accuracy"])
 
+# Tải dữ liệu MNIST từ keras.datasets.mnist và chia thành tập huấn luyện và tập kiểm tra.
 mnist = keras.datasets.mnist
 (X_train, Y_train), (X_test, Y_test) = mnist.load_data()
 X_test_image = X_test

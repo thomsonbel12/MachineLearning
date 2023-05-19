@@ -32,7 +32,7 @@ st.markdown(
     ### Teacher
     - Trần Tiến Đức
     ### Source code
-    - code: https://github.com/CunoVox/MachineLearning.git
+    - code: https://github.com/thomsonbel12/MachineLearning
     ### Reference
     - Teacher Tran Tien Duc
     - https://www.youtube.com/watch?v=1xtrIEwY_zY
