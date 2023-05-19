@@ -1,5 +1,5 @@
 Build a Machine Learning web application in Python with Streamlit. 
-    
+### Class - MALE431085_22_2_01CLC
 ### Contents in the project:
    - Handwriting recognition
    - Face recognition
